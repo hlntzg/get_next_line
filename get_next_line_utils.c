@@ -6,10 +6,10 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:29:05 by hutzig            #+#    #+#             */
-/*   Updated: 2024/05/15 17:17:10 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:56:18 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+/*
 #include "get_next_line.h"
 
 int	to_search_newline(t_list *hold)
@@ -38,4 +38,4 @@ t_list	*ft_lstlast(t_list *lst)
 	while (current->next != NULL && current)
 		current = current->next;
 	return (current);
-}
+}*/
