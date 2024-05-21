@@ -6,22 +6,22 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:29:20 by hutzig            #+#    #+#             */
-/*   Updated: 2024/05/20 13:03:34 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/05/21 16:09:27 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#ifndef	BUFFER_SIZE
+# ifndef BUFFER_SIZE
 # define BUFFER_SIZE 4
-#endif
+# endif
 
 # include <unistd.h> // read()
 # include <stdlib.h> // malloc()
 # include <sys/types.h> // ssize_t
 
-typedef struct	s_list
+typedef struct s_list
 {
 	char			*content;
 	struct s_list	*next;
