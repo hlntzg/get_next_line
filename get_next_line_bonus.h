@@ -6,7 +6,7 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:28:19 by hutzig            #+#    #+#             */
-/*   Updated: 2024/05/24 15:18:29 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/05/24 16:48:33 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 #  define BUFFER_SIZE 1024
 # endif
 
-# define MAX_FD 1024
-
+# include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>

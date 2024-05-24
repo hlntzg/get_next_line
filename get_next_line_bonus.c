@@ -6,12 +6,16 @@
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:29:22 by hutzig            #+#    #+#             */
-/*   Updated: 2024/05/24 15:07:39 by hutzig           ###   ########.fr       */
+/*   Updated: 2024/05/24 16:48:55 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
+/* ************************************************************************** */
+/* the function updates the data storage by removing the line that has just   */
+/* been read on getting_line() and return the update storage to get_next_line */
+/* ************************************************************************** */
 static char	*updating_data_storage(char *data_storage, char *line)
 {
 	char	*update_data_storage;
@@ -25,6 +29,10 @@ static char	*updating_data_storage(char *data_storage, char *line)
 	return (update_data_storage);
 }
 
+/* ************************************************************************** */
+/* the function extracts a complete line (including \n if there is one) from  */
+/* the current data storage and return it to get_next_line()				  */
+/* ************************************************************************** */
 static char	*getting_line(char *data_storage)
 {
 	char	*line;
@@ -46,6 +54,10 @@ static char	*getting_line(char *data_storage)
 	return (line);
 }
 
+/* ************************************************************************** */
+/* the function duplicates the read data to data storage (if it's empty) or   */
+/* concatenates the newly read data to the existing data storage			  */
+/* ************************************************************************** */
 static char	*managing_data_storage(char *data_storage, char *buffer_r)
 {
 	char	*tmp;
@@ -67,6 +79,10 @@ static char	*managing_data_storage(char *data_storage, char *buffer_r)
 	return (data_storage);
 }
 
+/* ************************************************************************** */
+/* the function reads from the file descriptor into the buffer and call the   */
+/* managing_data_storage() to updates the data storage content				  */
+/* ************************************************************************** */
 static char	*getting_data_storage(int fd, char *data_storage)
 {
 	char	buffer_r[BUFFER_SIZE + 1];
@@ -90,12 +106,18 @@ static char	*getting_data_storage(int fd, char *data_storage)
 	return (data_storage);
 }
 
+/* ************************************************************************** */
+/* get_next_line() is the main function that manages the overall process of   */
+/* reading and returning the complete line from a file descriptor, supporting */
+/* multiple file descriptors concurrently once data_storage is an array of    */
+/* strings, so the function can manage multiple files at the same time		  */
+/* ************************************************************************** */
 char	*get_next_line(int fd)
 {
-	static char	*data_storage[MAX_FD] = {0};
+	static char	*data_storage[OPEN_MAX] = {0};
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0 || fd > MAX_FD)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0 || fd > OPEN_MAX)
 		return (ft_free(&data_storage[fd]));
 	data_storage[fd] = getting_data_storage(fd, data_storage[fd]);
 	if (!data_storage[fd])
