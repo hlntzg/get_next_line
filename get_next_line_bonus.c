@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hutzig <hutzig@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 10:09:31 by hutzig            #+#    #+#             */
-/*   Updated: 2024/05/24 15:07:40 by hutzig           ###   ########.fr       */
+/*   Created: 2024/05/24 13:29:22 by hutzig            #+#    #+#             */
+/*   Updated: 2024/05/24 15:07:39 by hutzig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*updating_data_storage(char *data_storage, char *line)
 {
@@ -92,22 +92,22 @@ static char	*getting_data_storage(int fd, char *data_storage)
 
 char	*get_next_line(int fd)
 {
-	static char	*data_storage = NULL;
+	static char	*data_storage[MAX_FD] = {0};
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
-		return (ft_free(&data_storage));
-	data_storage = getting_data_storage(fd, data_storage);
-	if (!data_storage)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0 || fd > MAX_FD)
+		return (ft_free(&data_storage[fd]));
+	data_storage[fd] = getting_data_storage(fd, data_storage[fd]);
+	if (!data_storage[fd])
 		return (NULL);
-	line = getting_line(data_storage);
+	line = getting_line(data_storage[fd]);
 	if (!line)
-		return (ft_free(&data_storage));
-	data_storage = updating_data_storage(data_storage, line);
-	if (!data_storage && line)
+		return (ft_free(&data_storage[fd]));
+	data_storage[fd] = updating_data_storage(data_storage[fd], line);
+	if (!data_storage[fd] && line)
 	{
 		free(line);
-		free(data_storage);
+		free(data_storage[fd]);
 		return (NULL);
 	}
 	return (line);
